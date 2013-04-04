@@ -1,0 +1,6 @@
+<Alloy>
+	<Window class="container" id="articleView">
+		<Require id="customNav" src="customNav" />
+		<WebView id="articleWebView" class="articleView"/>
+	</Window>
+</Alloy>

@@ -1,0 +1,61 @@
+".container": {
+	backgroundColor: "black"
+},
+"#navLeftButton": {
+	left: 10,
+	width: 40,
+	height: 36,
+	backgroundGradient: {
+		type: "linear",
+		startPoint: { x: "0%", y:"0%"},
+		endPoint:   { x: "0%", y:"100%"},
+		colors: [
+			{ color: "#8d8d8d", offset: 0.0 },
+			{ color: "#2d2d2d", offset: 1.0 }
+		]},
+   backgroundImage: 'none',
+   backgroundSelectedColor: 'black',
+   color: 'white',
+   borderColor: "#4d4d4d",
+   borderWidth: 2,
+   borderRadius: 6,
+   visible: false
+},
+"#navRightButton": {
+	right: 10,
+	width: 40,
+	height: 36,
+	backgroundGradient: {
+		type: "linear",
+		startPoint: { x: "0%", y:"0%"},
+		endPoint:   { x: "0%", y:"100%"},
+		colors: [
+			{ color: "#8d8d8d", offset: 0.0 },
+			{ color: "#2d2d2d", offset: 1.0 }
+		]},
+   backgroundImage: 'none',
+   backgroundSelectedColor: 'black',
+   color: 'white',
+   borderColor: "#4d4d4d",
+   borderWidth: 2,
+   borderRadius: 6,
+   visible: false
+},
+"#discoveryNavBar": {
+	top: 0,
+	width: Ti.UI.FILL,
+	height: 40,
+	backgroundGradient: {
+		type: "linear",
+		startPoint: { x: "0%", y:"0%"},
+		endPoint:   { x: "0%", y:"100%"},
+		colors: [
+			{ color: "#8d8d8d", offset: 0.0 },
+			{ color: "#2d2d2d", offset: 1.0 }
+		]
+	}
+},
+"#discoveryNavLogo": {
+	width: 200,
+	image: "/discovery-news-logo.png"
+}

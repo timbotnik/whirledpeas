@@ -1,0 +1,58 @@
+".articleRow": {
+	backgroundColor:"black",
+	height: 120,
+	className: "articleRow"
+},
+".articleThumb": {
+	width: 96,
+	height: 96,
+	left: 6,
+	top: 18
+},
+".articleTitle[formFactor=handheld]": {
+	top: 16,
+	left: 108,
+	color: '#80b4d6',
+	width: Ti.UI.FILL,
+	font: {
+		fontWeight: 'bold',
+		fontSize: 10
+	}
+},
+".articleTitle[formFactor=tablet]": {
+	top: 16,
+	left: 108,
+	color: '#80b4d6',
+	width: Ti.UI.FILL,
+	font: {
+		fontWeight: 'bold',
+		fontSize: 14
+	}
+},
+".articleDesc[formFactor=handheld]": {
+	left: 108,
+	color: '#ffffff',
+	top: 48,
+	width: Ti.UI.FILL,
+	height: 64,
+	backgroundColor:"black",
+	font: {
+		fontSize: 10
+	}
+},
+".articleDesc[formFactor=tablet]": {
+	left: 108,
+	color: '#ffffff',
+	top: 48,
+	width: Ti.UI.FILL,
+	height: 64,
+	backgroundColor:"black"
+},
+".articleDate": {
+	top: 2,
+	left: 6,
+	color: '#ffffff',
+	font: {
+		fontSize: 10
+	}
+}

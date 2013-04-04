@@ -1,0 +1,9 @@
+<Alloy>
+	<Collection src="article" />
+	<Window class="container" id="articleList">
+		<Require id="customNav" src="customNav" />
+		<TableView id="articleTable" dataCollection="article" onClick="onItemClicked">
+			<Require src="articleRow" />
+	    </TableView>
+    </Window>
+</Alloy>

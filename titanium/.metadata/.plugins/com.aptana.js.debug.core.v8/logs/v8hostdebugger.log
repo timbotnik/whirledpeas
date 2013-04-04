@@ -1,0 +1,57 @@
+Logger started at: Thursday, April 4, 2013 11:46:02 AM EDT
+Component: com.aptana.js.debug.core.v8
+Version: 3.0.0.1349739205
+[46:6.363] Recv: >1365090366362*version<
+[46:6.364] Sent: >32*1365090366362*1*3.0.0.1349739205<
+[46:6.380] Recv: >1365090366363*option*monitorXHR*true<
+[46:6.380] Sent: >42*1365090366363*!unknown option <monitorXHR><
+[46:6.380] Recv: >1365090366364*option*stepFiltersEnabled*false<
+[46:6.380] Sent: >50*1365090366364*!unknown option <stepFiltersEnabled><
+[46:6.381] Recv: >1365090366365*option*suspendOnFirstLine*false<
+[46:6.381] Sent: >13*1365090366365<
+[46:6.381] Recv: >1365090366366*option*suspendOnExceptions*false<
+[46:6.572] Sent: >13*1365090366366<
+[46:6.572] Recv: >1365090366367*option*suspendOnErrors*true<
+[46:6.757] Sent: >13*1365090366367<
+[46:6.757] Recv: >1365090366368*option*suspendOnKeywords*true<
+[46:6.757] Sent: >13*1365090366368<
+[46:6.758] Recv: >1365090366369*option*bypassConstructors*false<
+[46:6.758] Sent: >50*1365090366369*!unknown option <bypassConstructors><
+[46:6.758] Recv: >1365090366370*option*stepFiltersEnabled*false<
+[46:6.758] Sent: >50*1365090366370*!unknown option <stepFiltersEnabled><
+[46:6.758] Recv: >1365090366371*detailFormatters<
+[46:6.758] Sent: >13*1365090366371<
+[46:6.759] Recv: >1365090366372*enable<
+[46:6.759] Sent: >13*resumed*start<
+[46:6.759] Sent: >13*1365090366372<
+[46:7.361] Sent: >44*scripts*created*1|ti:/kroll.js|anonymous|1|1<
+[46:7.361] Sent: >45*scripts*created*2|ti:/events.js|anonymous|1|1<
+[46:7.362] Sent: >45*scripts*created*3|ti:/window.js|anonymous|1|1<
+[46:7.362] Sent: >47*scripts*created*4|ti:/tabgroup.js|anonymous|1|1<
+[46:7.362] Sent: >46*scripts*created*5|ti:/webview.js|anonymous|1|1<
+[46:7.362] Sent: >48*scripts*created*6|ti:/bootstrap.js|anonymous|1|1<
+[46:7.362] Sent: >45*scripts*created*7|ti:/module.js|anonymous|1|1<
+[46:7.362] Sent: >46*scripts*created*8|ti:/console.js|anonymous|1|1<
+[46:7.362] Sent: >42*scripts*created*9|ti:/url.js|anonymous|1|1<
+[46:7.362] Sent: >44*scripts*created*10|ti:/path.js|anonymous|1|1<
+[46:7.362] Sent: >42*scripts*created*11|ti:/ui.js|anonymous|1|1<
+[46:7.362] Sent: >48*scripts*created*12|ti:/titanium.js|anonymous|1|1<
+[46:7.363] Sent: >43*scripts*created*13|ti:/tab.js|anonymous|1|1<
+[46:7.363] Sent: >47*scripts*created*14|ti:/invoker.js|anonymous|1|1<
+[46:7.363] Sent: >50*scripts*created*15|ti:/properties.js|anonymous|1|1<
+[46:7.677] Sent: >46*scripts*created*16|app:///app.js|anonymous|1|1<
+[46:7.929] Sent: >48*scripts*created*17|app:///alloy.js|anonymous|1|1<
+[46:8.378] Sent: >59*scripts*created*18|app:///alloy/underscore.js|anonymous|1|1<
+[46:9.136] Sent: >57*scripts*created*19|app:///alloy/backbone.js|anonymous|1|1<
+[46:9.657] Sent: >66*scripts*created*20|app:///alloy/controllers/index.js|anonymous|1|1<
+[46:9.936] Sent: >75*scripts*created*21|app:///alloy/controllers/BaseController.js|anonymous|1|1<
+[46:10.146] Sent: >72*scripts*created*22|app:///alloy/controllers/articleList.js|anonymous|1|1<
+[46:10.397] Sent: >63*scripts*created*23|app:///alloy/models/Article.js|anonymous|1|1<
+[46:10.701] Sent: >57*scripts*created*24|app:///alloy/sync/sql.js|anonymous|1|1<
+[46:10.926] Sent: >58*scripts*created*25|app:///alloy/sync/util.js|anonymous|1|1<
+[46:11.282] Sent: >70*scripts*created*26|app:///alloy/controllers/customNav.js|anonymous|1|1<
+[46:11.637] Sent: >53*scripts*created*27|app:///navControl.js|anonymous|1|1<
+[46:11.887] Sent: >50*scripts*created*28|app:///rssFeed.js|anonymous|1|1<
+[46:12.959] Sent: >71*scripts*created*29|app:///alloy/controllers/articleRow.js|anonymous|1|1<
+[46:56.627] Sent: >72*scripts*created*30|app:///alloy/controllers/articleView.js|anonymous|1|1<
+----------End of file----------

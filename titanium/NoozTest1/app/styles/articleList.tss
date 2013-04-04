@@ -1,0 +1,9 @@
+"#articleList":{
+	navBarHidden: true
+},
+"#articleTable": {
+	top: 40,
+	width: Ti.UI.FILL,
+	backgroundColor:"black",
+	separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.NONE
+},

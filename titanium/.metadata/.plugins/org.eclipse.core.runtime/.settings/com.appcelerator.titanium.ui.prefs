@@ -1,0 +1,10 @@
+Android\ Emulator\ Process\:ConsoleLogLevel=Info
+Application\ installer\:ConsoleLogLevel=Debug
+LAST_LAUNCH_TIMESTAMP=1365089564200
+NoozTest1\:ConsoleLogLevel=Debug
+eclipse.preferences.version=1
+iOS\ build\ and\ deploy\:ConsoleLogLevel=Debug
+preference.default.toolbar.visible_org.eclipse.debug.ui.DebugPerspective=true
+preference.show.console.onError=true
+preference.studio.perspective.toolbar.visible=true
+preference.studio.perspective.version=101

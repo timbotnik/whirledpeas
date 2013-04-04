@@ -1,0 +1,7 @@
+<Alloy>
+	<View class="container" id="discoveryNavBar">
+		<Button id="navLeftButton" onClick="onLeftButtonClicked"/>
+		<ImageView id="discoveryNavLogo"/>
+		<Button id="navRightButton" onClick="onRightButtonClicked"/>
+	</View>
+</Alloy>
