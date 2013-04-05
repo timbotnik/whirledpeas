@@ -2,7 +2,7 @@
 	<Collection src="article" />
 	<Window class="container" id="articleList">
 		<Require id="customNav" src="customNav" />
-		<TableView id="articleTable" dataCollection="article" onClick="onItemClicked">
+		<TableView id="articleTable" dataCollection="article" dataTransform="formatListItem" onClick="onItemClicked">
 			<Require src="articleRow" />
 	    </TableView>
     </Window>

@@ -1,6 +1,7 @@
 /**
  * @author Tim Hingston
  */
+var dwsUtils = require('/dwsUtils');
 
 function rssFeed () {
 
@@ -9,15 +10,9 @@ function rssFeed () {
 		return item.getElementsByTagName(key).item(0).text;
 	};
 	
-	var _padZero = function(n, p, c) {
-	    var padChar = typeof c !== 'undefined' ? c : '0';
-	    var pad = new Array(1 + p).join(padChar);
-	    return (pad + n).slice(-pad.length);
-	};
-	
 	var _parseDate = function(dateString) {
 		var dateParts = dateString.split(' ');
-		return dateParts[3] + '-' + _padZero(_MONTH_MAP[dateParts[2].toUpperCase()], 2) + '-' + dateParts[1] 
+		return dateParts[3] + '-' + dwsUtils.padZero(_MONTH_MAP[dateParts[2].toUpperCase()], 2) + '-' + dateParts[1] 
 			+ ' ' + dateParts[4];
 	};
 	

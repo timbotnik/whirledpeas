@@ -1,8 +1,13 @@
 <Alloy>
-	<TableViewRow class="articleRow" link="{link}" hasDetail="true">
-		<Label class="articleDate" text="{pubDate}"/>
-    	<ImageView class="articleThumb" image="{thumbnail}" defaultImage="/dnews-square.png"/>
-		<Label class="articleTitle" text="{title}"/>
-		<Label class="articleDesc" text="{description}"/>
+	<TableViewRow class="articleRow" link="{link}">
+		<View class="articleRowImageArea">
+			<Label class="articleDate" text="{pubDate}"/>
+    		<ImageView class="articleThumb" image="{thumbnail}" defaultImage="/dnews-square.png"/>
+    	</View>
+    	<View class="articleRowTextArea">
+			<Label class="articleTitle" text="{title}"/>
+			<Label class="articleDesc" text="{description}"/>
+		</View>
+		<View class="dottedLine" onPostlayout="onPostLayout" />
 	</TableViewRow>
 </Alloy>

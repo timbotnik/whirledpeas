@@ -4,6 +4,8 @@
 "#articleTable": {
 	top: 40,
 	width: Ti.UI.FILL,
-	backgroundColor:"black",
-	separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.NONE
+	backgroundColor:"black"
 },
+"#articleTable[platform=ios]": {
+	separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.NONE
+}
