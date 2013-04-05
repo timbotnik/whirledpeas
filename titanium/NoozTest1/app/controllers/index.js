@@ -10,5 +10,7 @@ if (OS_IOS) {
 	$.index.open();	
 }
 else if (OS_ANDROID) {
-	$.index.getView().open();
+	var win = $.index.getView();
+	win.setExitOnClose(true);
+	win.open();
 }
