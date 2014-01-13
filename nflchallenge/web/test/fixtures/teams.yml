@@ -1,0 +1,28 @@
+
+team1:
+  team_id: 1
+  name: Giants
+  city: New York
+  abbr: NYG
+  stadium: New Meadowlands Stadium
+  
+team2:
+  team_id: 2
+  name: Jets
+  city: New York
+  abbr: NYJ
+  stadium: New Meadowlands Stadium
+
+team3:
+  team_id: 3
+  name: Cowboys
+  city: Dallas
+  abbr: DC
+  stadium: Cowboys Stadium
+  
+team4:
+  team_id: 4
+  name: 49ers
+  city: San Francisco
+  abbr: SF
+  stadium: Candlestick Park

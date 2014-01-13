@@ -1,0 +1,12 @@
+development: &defaults
+  app_id: 195723130493432
+  client_id: 266077590075606
+  client_secret: 716a48b8edf50097794a13c770b000c7
+  perms: offline_access,manage_pages
+  page_id: bloombergsports
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

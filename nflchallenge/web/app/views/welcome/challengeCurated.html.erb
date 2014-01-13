@@ -1,0 +1,234 @@
+<script>
+POSITIONS = [];
+</script>
+
+<%= render :partial => 'intro' %>
+
+<div id='main-2'>
+	
+  <div class='tabs'> 
+    <ul class='tablist'>
+      <li class='active'> 
+        <a href='<%= welcome_challengeCurated_path %>'> 
+          <span class='icon ribbon'></span> 
+          <h1>Featured Challenges</h1> 
+        </a> 
+      </li> 
+      <li> 
+        <a href='<%= welcome_playerChallenge_path %>'> 
+          <span class='icon build'></span> 
+          <h1>Build Your Challenge</h1> 
+        </a> 
+      </li> 
+    </ul>
+ 		<% @sponsors.each do |sponsor| %>
+     <div class='featured'> 
+      <div class='intro-text'> 
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum. Nulla vitae elit libero, a pharetra augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p> 
+      </div> 
+      <div class='sponsor'> 
+        sponsored by
+        <%= image_tag sponsor['logo'] %> 
+      </div> 
+      <div class='clearfix'></div> 
+     
+      <% sponsor.challenges.each do |challenge| %>
+				<div class='dropdown' id="challenge_<%= challenge.id %>" data-player-filter="<%=raw challenge.player_filter %>"> 
+	        <span class='expand'></span> 
+	        <div class='heading'> <%= raw challenge.challenge_expression %> </div> 
+	        <div class='details'>
+						<!-- GAME DROPDOWN MENU TYPE -->
+						<% if challenge.challenge_type == :game && challenge.template_id == 'game_winner' || challenge.template_id == 'game_yards' %>
+	          	<%= render 'game_dropdown', :challenge => challenge %>
+						<!-- DROPDOWN MENU TYPE -->
+		 				<% elsif challenge.challenge_type == :game || challenge.challenge_type == :custom %>
+	          	<%= render 'dropdown', :challenge => challenge %>
+						<!-- TEAM DROPDOWN MENU TYPE -->
+		 				<% elsif challenge.challenge_type == :team  %>
+	          	<%= render 'team_dropdown', :challenge => challenge %>
+						<!-- SINGLE PLAYER MENU TYPE -->
+		 				<% elsif challenge.challenge_type == :player && challenge.challenge_subtype == 'any' %>
+	          	<%= render 'single_player_select', :challenge => challenge %>
+						<!-- PVP MENU TYPE -->
+						<% elsif challenge.challenge_type == :player && challenge.challenge_subtype == 'pvp' %>
+	          	<%= render 'pvp_select', :challenge => challenge %>
+						<!-- ERROR -->
+						<% else %>
+							<p>An error has occurred</p>
+						<% end %>
+	        </div> 
+	      </div>
+			<% end %>
+		 </div>
+		<% end %>
+
+    <div class='challenges'>
+      <% @challenges.each do |challenge| %>
+
+		      <div class='dropdown' id="challenge_<%= challenge.id %>" data-player-filter="<%= challenge.player_filter %>">
+		        <span class='expand'></span> 
+		        <div class='heading'> <%= raw challenge.challenge_expression %> </div>  
+		        <div class='details'>
+							<!-- DROPDOWN MENU TYPE -->
+			 				<% if challenge.challenge_type == :game || challenge.challenge_type == :custom %>
+		          	<%= render 'dropdown', :challenge => challenge %>
+							<!-- TEAM DROPDOWN MENU TYPE -->
+			 				<% elsif challenge.challenge_type == :team  %>
+		          	<%= render 'team_dropdown', :challenge => challenge %>
+							<!-- SINGLE PLAYER MENU TYPE -->
+			 				<% elsif challenge.challenge_type == :player && challenge.challenge_subtype == 'any' %>
+		          	<%= render 'single_player_select', :challenge => challenge %>
+							<!-- PVP MENU TYPE -->
+							<% elsif challenge.challenge_type == :player && challenge.challenge_subtype == 'pvp' %>
+		          	<%= render 'pvp_select', :challenge => challenge %>
+							<!-- ERROR -->
+							<% else %>
+								<p>An error has occurred</p>
+							<% end %>
+		        </div> 
+		      </div>
+		 
+      <% end %>
+    </div>
+  </div> 
+</div>
+
+<script language="javascript">
+$(document).ready(function() {
+	
+	// For single player select
+	$('.double3 .trigger').click(function(){
+		
+		var dropdown = $(this).parent();
+		
+		if (!dropdown.hasClass('down')) {
+			dropdown.addClass('down');
+			dropdown.find('.extra-boxes').show();
+			dropdown.find('.lighter').sweetSelect("Team");
+		} else {
+			dropdown.removeClass('down');
+			dropdown.find('.extra-boxes').hide();
+			dropdown.find('.lighter').prependTo(dropdown.find('.extra-boxes'));
+			dropdown.find('.lighter-custom').remove();
+			dropdown.find('.lighter2').appendTo(dropdown.find('.extra-boxes'));
+			dropdown.find('.lighter2-custom').remove();
+		}
+		
+		var the_id = dropdown.attr('id');
+		$.data(document.body, 'clicked', the_id)
+		
+	});
+	
+  $('.lighter-custom li').live('mouseup', function() {
+    
+		var position = $(this).closest('.dropdown').data().playerFilter
+		var current = "#" + $.data(document.body, 'clicked');
+		var challenge_id = $(this).closest('.dropdown').attr('id').substr(10);
+
+		getPlayers($(this).data().val,'player1',POSITIONS[challenge_id]);
+
+     var double_box = $(this).closest(current + ' .box .extra-boxes');
+     $(current +' .lighter2-custom').find('select').appendTo(double_box);
+     $(current + ' .lighter2-custom').remove();
+     $(current + ' .lighter2').sweetSelect("Player");
+  });
+	
+	owner_id = $(this).parent().attr('id')
+
+	$('.lighter2-custom li').live('mouseup', function(){
+		
+     var player_id = $(this).data().val;
+     var temp = $(this).text();
+     var player_name = temp.slice(0, -4);
+     var position = temp.substring(temp.length-3);
+     var team = $(this).closest('.double3').find('.lighter-custom .box').text();
+     var image_url = "http://static.nfl.com/static/content/public/image/getty/headshot/" + player_id[0] + "/" + player_id[1] + "/" + player_id[2] + "/" + player_id + ".jpg";
+    var image_tag = "<img alt='" + player_name + "' class='player-photo small' src='" + image_url + "' />";
+    var text_tags = "<h5>" + player_name + "</h5> <p>" + position + ", " + team + "</p>";
+    $(this).closest('.dropdown').find('.player-preview').html(image_tag + "<div class='text'></div>");
+    $(this).closest('.dropdown').find('.player-preview .text').html(text_tags);
+  });
+
+	function getPlayers(team_id,target,pos) {
+	  if (!team_id) {
+	    $('select#'+target).empty();
+	    return;
+	  }
+	  API({
+	    call:'api/players/search',
+	    dataMethod:'POST',
+	    data:{
+	      post:{
+	        team_id:team_id,
+	        position: pos
+	      }
+	    },
+	    response:function(resp,args) {
+	      $('select#'+target).empty();
+	      $.each(resp.data,function(i,result){
+	        var player = result.player;
+	        $('select#'+target).append('<option value="'+player.player_id+'">'+player.first+' '+player.last+': '+player.position+'</option>');
+	      });
+	    }
+	  })
+	}
+	
+
+  $('.btn-red ').live('mouseup', function(){
+    var challenge_id = $(this).attr('id');
+    var my_pick;
+    if ($(this).hasClass('ct_player')) {
+	    if ($('#pvp_container_'+challenge_id).attr('id') == undefined)
+        my_pick = $('div#challenge_'+challenge_id+' select.lighter2').val();
+      else
+        my_pick = $('#pvp_container_'+challenge_id+' input:checked').val();
+    }
+    else if ($(this).hasClass('ct_game'))
+      my_pick = $('#select_'+challenge_id).val();
+    else if ($(this).hasClass('ct_team'))
+      my_pick = $('#select_'+challenge_id).val();
+    else if ($(this).hasClass('ct_custom'))
+      my_pick = $('#select_'+challenge_id).val();
+    else {
+      alert('Unknown challenge type');
+      return;
+    }
+    
+    if ((my_pick == undefined) || (my_pick == '')) {
+      alert('Please make your selection.');
+      return;
+    }
+    
+    var request = {
+      call:'api/challenges/respond',
+      dataMethod:'POST',
+      data:{
+        data:{
+          challenge_id : challenge_id,
+          response: my_pick,
+          status: 'responded'
+        }
+      },
+      response:function(resp,args) {
+        if(!resp.success) {
+          alert(resp.message);
+          return;
+        }
+        document.location.href = '/challenges/'+challenge_id;
+      }
+    }
+    if (USER.id != '0')
+      API(request);
+    else {
+      REQUESTS = []
+      REQUESTS.push(request); // Store for after FB Activation
+      initConnect();
+    }
+    
+    
+  })
+
+  $('h2#header').empty().append('Loading User...');
+  fbConnect();
+});
+</script>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xml:lang='en' xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+	
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="P3P" content='CP="CAO PSA OUR"'>
+	
+  <title>Bloomberg Sports > Fan Libs</title>
+  <%= stylesheet_link_tag :all %>
+  <%= csrf_meta_tag %>
+  <%= javascript_include_tag "jquery" %>
+  <%= javascript_include_tag "jquery-ui-1.8.1.custom.min" %>
+  <%= javascript_include_tag "init" %>
+  <%= javascript_include_tag "sweetSelect" %>
+  <%= javascript_include_tag "custom" %>
+  <%= javascript_include_tag "vendor/customInput.jquery" %>
+  <%= javascript_include_tag "vendor/jquery.jscrollpane.min" %>
+  <%= javascript_include_tag "vendor/jquery.mousewheel" %>
+  <%= javascript_include_tag "vendor/modernizr-2.0.6.min" %>
+  <%= javascript_include_tag "vendor/mwheelIntent" %>
+  <%= javascript_include_tag "json2.min" %>
+  <script src="http://use.typekit.com/ugz3tbf.js"></script>
+	<script>try{Typekit.load();}catch(e){}</script>
+  <script language="javascript">
+    var USER = {
+      id: '<%=h @current_user.fb_number%>',
+      token: '<%=h @current_user.fb_token%>',
+      nickname: '<%=h @current_user.nickname%>',
+      role: '<%=h @current_user.role%>'
+    }
+  </script>
+</head>
+<body>
+  <nav id="top-bar">
+		<a href="<%= welcome_playerChallenge_path %>" class="new-challenge">Create a new challenge</a>
+		<div class="right">
+			<a href="#" class="sign-out">Sign Out</a>
+			<a href="/welcome/history" class="history">History</a>
+		</div>
+	</nav>
+	
+	<a href="<%= welcome_challengeCurated_path %>" id="logo"></a>
+	
+	<%= yield %>
+  <div id="fb-root"></div>
+</body>
+</html>

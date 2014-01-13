@@ -1,0 +1,286 @@
+<div class='player-challenge'>
+<div class='corners'>
+  <div class='hilight-box'>
+    <h1><%=@challenge.challenge_expression.html_safe %></h1>
+    <div class='content'>
+        <div class='center spc1'>
+          <% if (@mypick['status'] == 'pending') %>
+            <ol class='player-select'>
+              <li>
+                <div class='custom-select double'>
+                  <div class='trigger'></div>
+                  <div class='box'>
+                    <p>Browse players</p>
+                    <div class='extra-boxes'>
+                      <select class='lighter' name="team1" id="team_id" onchange="getPlayers(this.value,'player1');">
+                        <option value="0">Loading...</option>
+                      </select>
+                      <select class='lighter2' id='player_id' name='player1'>
+                        <option value='0'>Loading...</option>
+                      </select>
+                    </div>
+                  </div>
+                  <span class='divider'></span>
+                  <span class='arrow first'></span>
+                </div>
+              </li>
+							<div class='player-preview'>
+								<%= image_tag '../images/mystery.png', :class => 'not-picked' %>
+								<p class='not-picked-text'>Pick your player</p>
+							</div>
+            </ol>
+          <% end %>
+        </div>
+      
+      <% if (@mypick['status'] == 'pending') %>
+        <a href="#" class="btn-red pick-player" id="submit_response">Submit</a>
+      <% end %>
+      <!-- <div class='status private'>
+              <strong>Private</strong>
+              (Only invited users can participate)
+            </div>
+            <div class="open-till">Open until <strong><span class="time">8:00pm</span> on <span class="date">Monday October 12</span></strong> -->
+      
+    </div>
+  </div>
+</div>
+
+<!-- Create variables to indicate what the actual challenge type is. This should and will be in the back end in the future -->
+<% @type = :player %>
+<!-- Just one wonderful all-purpose response box! -->
+<%= render 'your_pick', :type => @type, :pick => @mypick, :challenge => @mypick  %>
+
+  <div class='sub-box the-stakes'>
+    <h1>The Stakes:</h1>
+    <div class='left'>
+      <img alt="Trophy" class="trophy" src="/images/trophy.png" />
+      <h3>
+        <% if (@challenge.featured == true) %>
+          Featured Challenge
+        <% else %>
+          <%= @challenge.stakes %>
+        <% end %>
+      </h3>
+    </div>
+  </div>
+
+<script language="javascript">
+  var PLAYERS = [];
+  
+  $('select#team_id').change(function() {
+    switch($(this).val()) {
+      case '0':
+        return;
+      break;
+
+      default:
+      API({
+        call:'api/players/search',
+        dataMethod:'POST',
+        data:{
+          post:{
+            team_id:$('select#team_id').val(),
+            position:<%=@challenge.player_filter%>
+          }
+        },
+        response:function(resp,args) {
+          $('select#player_id').empty().append('<option value="0">Select Player</option>');
+          $.each(resp.data,function(i,result){
+            var player = result.player;
+            var exists = findPlayer(player.player_id);
+            if (exists.player_id == undefined)
+              PLAYERS.push(player);
+            $('select#player_id').append('<option value="'+player.player_id+'">'+player.first+' '+player.last+': '+player.position+'</option>');
+          });
+        }
+      })
+    }
+  })
+
+  $('select#player_id').change(function() {
+    var player_id = $(this).val();
+    if (player_id == '0')
+      return;
+    var player = findPlayer(player_id)
+    var thumb = 'http://static.nfl.com/static/content/public/image/getty/headshot/';
+    thumb += player.player_id.charAt(0)+'/'+
+             player.player_id.charAt(1)+'/'+
+             player.player_id.charAt(2)+'/'+
+             player.player_id+'.jpg';
+    $('span#player2').empty().append(player.first+' '+player.last);
+    $('.your .thumb').css('backgroundImage','url('+thumb+')');
+  })
+
+  function findPlayer(player_id) {
+    var resp = {};
+    $.each(PLAYERS,function(i,player){
+      if (player.player_id == player_id) {
+        resp = player;
+        return false;
+      }
+    })
+    return resp;
+  }
+
+  $('#submit_response').mousedown(function() {
+    var player_id = $('select#player_id').val();
+    if (player_id == 0) {
+      alert('Please select a player.');
+      return;
+    }
+    var request = {
+      call:'api/challenges/respond',
+      dataMethod:'POST',
+      data:{
+        data:{
+          challenge_id : <%=@challenge['id']%>,
+          response: player_id,
+          status: 'responded'
+        }
+      },
+      response:function(resp,args) {
+        if(!resp.success) {
+          alert(resp.message);
+          return;
+        }
+        document.location.href = '/challenges/<%=@challenge['id']%>';
+      }
+    }
+    if (USER.id != '0')
+      API(request);
+    else {
+      REQUESTS = []
+      REQUESTS.push(request); // Store for after FB Activation
+      initConnect();
+    }
+  })
+
+  $('.invite_friends').mousedown(function() {
+    inviteFriends();
+  });
+  
+  function getPlayers(team_id,target) {
+    if (!team_id) {
+      $('select#player_id').empty().append('<option value=0>Select Player</option>');
+      return;
+    }
+    API({
+      call:'api/players/search',
+      dataMethod:'POST',
+      data:{
+        post:{
+          team_id:team_id,
+          position: <%=@challenge.player_filter%>
+        }
+      },
+      response:function(resp,args) {
+        $('select#'+target).empty().append('<option value="0">Select Player</option>');
+        $.each(resp.data,function(i,result){
+          var player = result.player;
+          var exists = findPlayer(player.player_id);
+          if (exists.player_id == undefined)
+            PLAYERS.push(player);
+          $('select#'+target).append('<option value="'+player.player_id+'">'+player.first+' '+player.last+': '+player.position+'</option>');
+        });
+      }
+    })
+  }
+  
+  function resetFields() {
+    $('select#team_id').empty().append('<option value="0">Team');
+    $('select#player_id').empty().append('<option value="0">Player');
+    $.each(TEAMS,function(i,team){
+      $('select#team_id').append('<option value="'+team.id+'">'+team.name+'</option>');
+    });
+  };
+  
+  // CRAZY JEFFNESS //
+  
+  var double_offset = $('.double').offset();
+  $('.warning').css({ top: (double_offset.top - 45), left: (double_offset.left - 20) });
+
+  var challenge_set = true;
+
+  // drop down the double select box
+  var double_down = false; // ha, ha
+  var boxes_loaded = false;
+  $('.double .trigger').click(function() {
+    if (!boxes_loaded) {
+      resetFields();
+      $(this).parent().find('select.lighter').sweetSelect();
+      boxes_loaded = true;
+    }
+
+    if (!double_down && !challenge_set) {
+      $('.warning').stop(true,true).fadeIn().delay(800).fadeOut();
+    } else if (!double_down && challenge_set) {
+      $(this).parent().addClass('down');
+      $(this).parent().find('.extra-boxes').show();
+      double_down = true;
+    } else {
+      $(this).parent().removeClass('down');
+      $(this).parent().find('.extra-boxes').hide();
+      double_down = false;
+    }
+  });
+
+  // drop down the second double select box
+  var double_down2 = false; // ha, ha
+  var boxes_loaded2 = false;
+  $('.double2 .trigger').click(function() {
+
+    if (!boxes_loaded2) {
+      $(this).parent().find('select.lighter2').sweetSelect();
+      boxes_loaded2 = true;
+    }
+
+    if (!double_down2 && !challenge_set) {
+      $('.warning').stop(true,true).fadeIn().delay(800).fadeOut();
+    } else if (!double_down2 && challenge_set) {
+      $(this).parent().addClass('down');
+      $(this).parent().find('.extra-boxes').show();
+      double_down2 = true;
+    } else {
+      $(this).parent().removeClass('down');
+      $(this).parent().find('.extra-boxes').hide();
+      double_down2 = false;
+    }
+  });
+
+  var first_pick = false;
+  $('.lighter-custom li').live('mouseup', function() {
+    getPlayers($(this).data().val,'player_id');
+
+    if (!first_pick) {
+     $('.lighter2').sweetSelect();
+     first_pick = true;
+    } else {
+      var double_box = $(this).closest('.double .box .extra-boxes');
+      $('.lighter2-custom').find('select').appendTo(double_box);
+      $('.lighter2-custom').remove();
+      $('.lighter2').sweetSelect();
+    }
+  });
+
+  $('.lighter2-custom li').live('mouseup', function(){
+     var player_id = $(this).data().val;
+     var temp = $(this).text();
+     var player_name = temp.slice(0, -4);
+     var position = temp.substring(temp.length-3);
+     var team = $(this).closest('.double').find('.lighter-custom .box').text();
+     var image_url = "http://static.nfl.com/static/content/public/image/getty/headshot/" + player_id[0] + "/" + player_id[1] + "/" + player_id[2] + "/" + player_id + ".jpg";
+    var image_tag = "<img alt='" + player_name + "' class='player-photo small' src='" + image_url + "' />";
+    var text_tags = "<h5>" + player_name + "</h5> <p>" + position + ", " + team + "</p>";
+    $('.player-preview').html(image_tag + "<div class='text'></div>");
+    $('.player-preview .text').html(text_tags);
+  });
+  // end jeff's slightly painful gang of live functions\
+  // dude, i had no choice *sob* -- Jeff
+  
+  
+  var TEAMS = [];
+  <% @teams.each do |team| %>
+    TEAMS.push({ id: '<%= team.team_id %>', name: '<%= team.city %> <%= team.name %>' });
+  <% end %>
+  
+</script>

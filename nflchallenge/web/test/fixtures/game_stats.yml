@@ -1,0 +1,30 @@
+stat1:
+  game_id: 1
+  week_id: 1
+  team_id: 1
+  turnovers: 2
+  points_scored: 10
+
+stat2:
+  game_id: 1
+  week_id: 1
+  team_id: 2
+  turnovers: 2
+  points_scored: 20
+  
+stat3:
+  game_id: 2
+  week_id: 1
+  team_id: 3
+  rushing_yards: 100
+  passing_yards: 100
+  
+stat4:
+  game_id: 2
+  week_id: 1
+  team_id: 4
+  rushing_yards: 50
+  passing_yards: 50
+
+  
+  

@@ -1,0 +1,12 @@
+# NFL data services
+api:
+  api_host: 'beta.bloombergsports.com'
+  games: '/nfl/decisionmaker/service/2011/shared/games'
+  teams: '/nfl/decisionmaker/service/2011/shared/teams'
+  players: '/nfl/decisionmaker/service/2011/shared/players'
+  stats: '/nfl/decisionmaker/service/2011/shared/gameStats'
+  
+season:
+  year: '2010'
+  starts_at: '2010-09-07 15:00:00 UTC'
+  current_time_override: '2010-09-14 15:00:00 UTC'

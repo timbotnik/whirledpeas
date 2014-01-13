@@ -1,0 +1,85 @@
+<div class='custom-challenge'>
+	
+	<!-- -->
+	
+<div class='corners'>
+  <div class='hilight-box'>
+    <h1><%=@challenge.challenge_expression.html_safe %></h1>
+    <div class='content'>
+      <div class='center'>
+        <% if (@mypick['status'] == 'pending') %>
+          <select id='my_pick'>
+            <% @picks.each do |pick| %>
+              <option><%=pick%></option><br>
+            <% end %>
+          </select>
+        <% end %>
+      </div>
+      
+      <% if (@mypick['status'] == 'pending') %>
+        <a href="#" class="btn-red pick-player" id="submit_response">Submit</a>
+      <% end %>
+      <!-- <div class='status private'>
+              <strong>Private</strong>
+              (Only invited users can participate)
+            </div> -->
+      <!-- <div class="open-till">Open until <strong><span class="time">8:00pm</span> on <span class="date">Monday October 12</span></strong> -->
+    </div>
+  </div>
+</div>
+
+<!-- Create variables to indicate what the actual challenge type is. This should and will be in the back end in the future -->
+<% @type = :custom %>
+<!-- Just one wonderful all-purpose response box! -->
+<%= render 'your_pick', :type => @type, :pick => @mypick, :challenge => @mypick  %>
+
+  <div class='sub-box the-stakes'>
+    <h1>The Stakes:</h1>
+    <div class='left'>
+      <img alt="Trophy" class="trophy" src="/images/trophy.png" />
+      <h3><%=@challenge['stakes']%></h3>
+    </div>
+  </div>
+
+
+<script language="javascript">
+  $('#submit_response').mousedown(function() { 
+    var my_pick = $('#my_pick').val();
+    if (my_pick == '0') {
+      alert('Please select your pick.');
+      return;
+    }
+    var request = {
+      call:'api/challenges/respond',
+      dataMethod:'POST',
+      data:{
+        data:{
+          challenge_id : <%=@challenge['id']%>,
+          response: my_pick,
+          status: 'responded'
+        }
+      },
+      response:function(resp,args) {
+        if(!resp.success) {
+          alert(resp.message);
+          return;
+        }
+        document.location.href = '/challenges/<%=@challenge['id']%>';
+      }
+    }
+    if (USER.id != '0')
+      API(request);
+    else {
+      REQUESTS = []
+      REQUESTS.push(request); // Store for after FB Activation
+      initConnect();
+    }
+  })
+  
+  $('.invite_friends').mousedown(function() { 
+    inviteFriends();
+  })
+  
+  $('#my_pick').sweetSelect("Please make your selection");
+  
+</script>
