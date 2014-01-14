@@ -1,0 +1,310 @@
+<h2>Bloomberg Sports Administration</h2>
+
+<div id="content">
+  <div class="title">Challenges Administrator</div>
+  <%= link_to 'Admin', admin_index_path, :class => 'tab' %>
+  <%= link_to 'Teams', admin_teams_path, :class => 'tab' %>
+  <%= link_to 'Games', admin_games_path, :class => 'tab' %>
+  <%= link_to 'Players', admin_players_path, :class => 'tab' %>
+  <%= link_to 'Sponsors', admin_sponsors_path, :class => 'tab' %>
+  <%= link_to 'Challenges', admin_challenges_path, :class => 'tab active' %>
+    
+  <div class="box">
+  
+    <div class="challengeLinks">
+      <%= link_to 'Custom Challenge', admin_challenges_path, :class => 'challengeLink' %>
+      <%= link_to 'Player Challenge', admin_playerChallenge_path, :class => 'challengeLink active' %>
+      <%= link_to 'Game Challenge', admin_gameChallenge_path, :class => 'challengeLink' %>
+      <%= link_to 'Team Challenge', admin_teamChallenge_path, :class => 'challengeLink' %>
+    </div>
+    <div class="dotted_line"></div>
+
+    Player challenges are created around specific individuals on a team.  The challenges you create in this category will revolve around their specific performance, and theirs' alone.<br><br>
+    
+    <i>Example: "<strong><u>David Harris</u></strong> will have the most <strong><u>touchdowns</u></strong> this week."</i>
+    
+    <div class="dotted_line"></div>
+    
+    <form name="playerChallenge" id="playerChallenge" onSubmit="return false;">
+      
+      <div class="form_title">Select challenge:</div>
+      <div class="form_options">
+        <select name="challenge" id="challenge" onchange="setChallenge(this.value)">
+          <option value="0">Select your challenge.</option>
+          <% @challenges.each do |challenge| %>
+            <option value="<%=challenge['template_id']%>"><%=challenge['display_text']%>
+          <% end %>
+        </select>
+      </div>
+      <div class="clear"></div>
+      
+      <div class="form_title">Challenge Text:</div>
+      <div class="form_options">
+        <textarea name="challenge_expression" id="challenge_expression" class="create" style="width: 400px; height: 25px;"></textarea>
+      </div>
+      <div class="clear"></div>
+      <br>
+      
+      <div class="form_title">Challenge type:</div>
+      <div class="form_options">
+        <input onchange="setType(this.value); formatExpression()" type="radio" id="type" name="type" value="pvp" checked> Player Vs. Player &nbsp; &nbsp;  
+        <input onchange="setType(this.value); formatExpression()" type="radio" id="type" name="type" value="any"> Choose Any Player
+      </div>
+      <div class="clear"></div>
+      
+      <div class="form_title" id="possible_picks_1">Possible picks:</div>
+      <div class="form_options" id="possible_picks_2">
+        <select name="team1" id="team1" onchange="getPlayers(this.value,'player1');">
+          <option value="0">Loading...</option>
+        </select> &nbsp; 
+        <select name="player1" id="player1" onchange="formatExpression()">
+          <option value="0">Loading...</option>
+        </select><br><br>
+        <select name="team2" id="team2" onchange="getPlayers(this.value,'player2');">
+          <option value="0">Loading...</option>
+        </select> &nbsp; 
+        <select name="player2" id="player2" onchange="formatExpression()">
+          <option value="0">Loading...</option>
+        </select><br><br>
+      </div>
+      <div class="clear"></div>
+              
+      <div class="form_title">Sponsor (Optional):</div>
+      <div class="form_options">
+        <select name="sponsor_id" id="sponsor_id">
+          <option value="0">Please select a sponsor (optional).</option>
+          <% @sponsors.each do |sponsor| %>
+            <option value="<%=sponsor['id']%>"><%=sponsor['name']%></option>
+          <% end %>
+        </select>
+        <br>
+        <small>If provided, this challenge will be grouped with challenges from this sponsor.</small><br><br>
+      </div>
+      <div class="clear"></div>
+      
+      <div id="continue" class="button" style="float: right; margin-top: 10px;">Continue ></div>
+      <div class="clear"></div>
+    </form>
+  </div>
+  
+</div>
+
+<%= link_to 'Home', welcome_index_path %>
+
+<script>
+var CHALLENGE_TYPE = 'pvp';
+var CHALLENGE_ID = '0';
+$(document).ready(function() { 
+  $('h2#header').empty().append('Loading User...');
+  fbConnect();
+  setType(CHALLENGE_TYPE);
+  setChallenge(CHALLENGE_ID);
+  $('div#continue').mousedown(function() { createChallenge(); });
+});
+
+/* Ajax */
+function createChallenge() {
+  var player1 = $('#player1').val();
+  var player2 = $('#player2').val();
+  var stakes = 'None';
+  switch(CHALLENGE_TYPE) {
+    case 'pvp': // Verify 2 players
+      if ((player1 == '0') || (player2 == '0')) {
+        alert('Please make your selections!');
+        return;
+      }
+    break;
+    case 'any':
+      player1 = null;
+      player2 = null;
+    break;
+    default: // Who knows what they're doing
+      alert('Please make your selections!');
+      return;
+  }
+  if (CHALLENGE_ID == '0') { // Verify they've selected a challenge
+    alert('Please make your selections!');
+    return;
+  }
+  var challenge = {
+    template_id : $('select#challenge').val(),
+    stakes : stakes,
+    player1_id: player1,
+    player2_id: player2,
+    challenge_subtype: CHALLENGE_TYPE,
+    public: true,
+    featured : true
+  }
+  if ($('#sponsor_id').val() != 0)
+    challenge.sponsor_id = $('#sponsor_id').val();
+  var ed = tinyMCE.get('challenge_expression');
+  exp = $.trim(ed.getContent());  
+  if (exp.length)
+    challenge.challenge_expression = exp;
+  
+  var request = {
+    call:'api/challenges/player',
+    dataMethod:'POST',
+    data:{
+      challenge:challenge
+    },
+    response:function(resp,args) {
+      if(!resp.success) {
+        alert(resp.message);
+        return;
+      }
+      if (!confirm("Challenge created! Would you like to view the live challenge? (Cancel to return to administrator)")) {
+        document.location.reload();
+      }
+      else {
+        switch(CHALLENGE_TYPE) {
+          case 'pvp':
+          document.location.href = '/challenges/step2_'+CHALLENGE_TYPE+'/'+resp.data.challenge.id;
+          break;
+          
+          default: 
+          document.location.href = '/challenges/'+resp.data.challenge.id;
+        }
+      }
+    }
+  }
+  if (USER.id != '0')
+    API(request);
+  else {
+    REQUESTS.push(request); // Store for after FB Activation
+    initConnect();
+  }
+}
+
+function setType(id) {
+  CHALLENGE_TYPE = id;
+  var ed = tinyMCE.get('challenge_expression');
+  switch(id) {
+    case 'any':
+    if (ed != undefined)
+      ed.setContent($('#challenge option:selected').text());
+    $('div#possible_picks_1').hide();
+    $('div#possible_picks_2').hide();
+    break;
+    
+    default: 
+    if (ed != undefined)
+      ed.setContent(CHALLENGE_TEMPLATES[$('#challenge').val()]);
+    $('div#possible_picks_1').show();
+    $('div#possible_picks_2').show();
+  }
+}
+
+function setChallenge(id) {
+  CHALLENGE_ID = id;
+  var ed = tinyMCE.get('challenge_expression');
+  if (ed != undefined)
+    ed.setContent(CHALLENGE_TEMPLATES[id]);
+  resetFields();
+  formatExpression();
+}
+
+function getPositions() {
+  var positions;
+  switch(CHALLENGE_ID) {
+    <% @challenges.each do |challenge| %>
+    case '<%=challenge['template_id']%>':
+      positions = <%=raw challenge['player_filter']%>
+    break;
+    <% end %>
+      
+    default:
+      positioms = []
+  }
+  return positions;
+}
+
+function getPlayers(team_id,target) {
+  if (!team_id) {
+    $('select#'+target).empty().append('<option value=0>Select Player</option>');
+    return;
+  }
+  API({
+    call:'api/players/search',
+    dataMethod:'POST',
+    data:{
+      post:{
+        team_id:team_id,
+        position:getPositions()
+      }
+    },
+    response:function(resp,args) {
+      $('select#'+target).empty().append('<option value="0">Select Player</option>');
+      $.each(resp.data,function(i,result){
+        var player = result.player;
+        var exists = findPlayer(player.player_id);
+        if (exists.player_id == undefined)
+          PLAYERS.push(player);
+        $('select#'+target).append('<option value="'+player.player_id+'">'+player.first+' '+player.last+': '+player.position+'</option>');
+      });
+    }
+  })
+}
+
+function findPlayer(player_id) {
+  var resp = {};
+  $.each(PLAYERS,function(i,player){ 
+    if (player.player_id == player_id) {
+      resp = player;
+      return false;
+    }
+  })
+  return resp;
+}
+
+function resetFields() {
+  $('select#team1').empty().append('<option value="0">Select a team to browse players.');
+  $('select#team2').empty().append('<option value="0">Select a team to browse players.');
+  $('select#player1').empty().append('<option value="0">Select Player');
+  $('select#player2').empty().append('<option value="0">Select Player');
+  $.each(TEAMS,function(i,team){ 
+    $('select#team1').append('<option value="'+team.id+'">'+team.name+'</option>');
+    $('select#team2').append('<option value="'+team.id+'">'+team.name+'</option>');
+  })
+}
+
+function formatExpression() {
+  if ((CHALLENGE_ID == '0')){
+    $('div.mypickpreview').empty().append('Make your selections!');
+    return;
+  }
+  var p1id = $('#player1').val();
+  var p2id = $('#player2').val();
+  // Set Display Preview
+  var exp = CHALLENGE_TEMPLATES[CHALLENGE_ID];
+  switch(CHALLENGE_TYPE) {
+    case 'pvp':
+      if (p1id == '0' || p2id == '0')
+        return; // Not satisfied
+      var player1 = findPlayer(p1id);
+      var player2 = findPlayer(p2id);
+      exp = exp.replace("{PLAYER}",'<strong>'+player1.first+' '+player1.last+' or '+player2.first+' '+player2.last+'</strong>');
+    break;
+    case 'any':
+      if (p1id == '0')
+        return; // Not satisfied
+      var player1 = findPlayer(p1id);
+      exp = exp.replace("{PLAYER}",'<strong>'+player1.first+' '+player1.last+'</strong>');
+    break;
+  }
+  $('div.mypickpreview').empty().append('"'+exp+'"');
+}
+
+var PLAYERS = [];
+
+var TEAMS = [];
+<% @teams.each do |team| %>
+  TEAMS.push({ id: '<%= team.team_id %>', name: '<%= team.city %> <%= team.name %>' });
+<% end %>
+
+var CHALLENGE_TEMPLATES = {
+<% @challenges.each do |challenge| %>
+  <%= challenge['template_id'] %> : '<%=raw challenge['template_expression'] %>',
+<% end %>
+}
+</script>

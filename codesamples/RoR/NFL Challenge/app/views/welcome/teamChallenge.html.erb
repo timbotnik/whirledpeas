@@ -1,0 +1,187 @@
+<%= render :partial => 'intro' %>
+
+<div id='main-2'>
+
+  <div class='tabs'>
+    <ul class='tablist'>
+      <li>
+        <a href='<%= welcome_challengeCurated_path %>'>
+          <span class='icon ribbon'></span>
+          <h1>Featured Challenges</h1>
+        </a>
+      </li>
+      <li class='active'>
+        <a href='<%= welcome_playerChallenge_path %>'>
+          <span class='icon build'></span>
+          <h1>Build Your Challenge</h1>
+        </a>
+      </li>
+    </ul>
+
+    <div class='categories'>
+      <%= link_to 'Player Challenge', welcome_playerChallenge_path %>
+      <%= link_to 'Game Challenge', welcome_gameChallenge_path %>
+      <%= link_to 'Team Challenge', welcome_teamChallenge_path, :class => 'active' %>
+    </div>
+
+    <div class='explanation'>
+      <p>Team challenges are created around an entire team. The challenges you create in this category will revolve around all individuals on the team and their joint effort, rather than calling out one person’s specific performance.</p>
+      <p><strong class='italic'>Example:</strong> &ldquo;<strong class='yellow'>The Packers</strong> will have the most <strong class='yellow'>touchdowns</strong> this week.&rdquo;</p>
+    </div>
+
+     <ul class='actions'>
+     <form name="teamChallenge" id="teamChallenge" onSubmit="return false;">
+
+       <li class='row'>
+         <div class='name'>
+           <h3>Select challenge:</h3>
+           <small>Only you will select this</small>
+         </div>
+         <select name="challenge" class='team-challenge' id="challenge" onchange="CHALLENGE_ID=this.value; formatExpression();">
+          <option value="0">Select your challenge</option>
+          <% @challenges.each do |challenge| %>
+            <option value="<%=challenge['template_id']%>"><%=challenge['display_text']%>
+          <% end %>
+        </select>
+       </li>
+
+       <li class='row'>
+         <div class='name'>
+           <h3>Your Pick:</h3>
+           <small>Your friends will pick too</small>
+         </div>
+         <select name="mypick" class='team-pick' id="mypick" onchange="formatExpression()">
+            <option value="0">Select a team</option>
+            <% @teams.each do |team| %>
+              <option value="<%= team.team_id %>"><%= team.city %> <%= team.name %></option>
+            <% end %>
+         </select>
+       </li>
+
+      <li class='row'>
+         <div class='name'>
+          <h3>Privacy:</h3>
+        </div>
+        <div class='option-1'>
+          <!-- id should be 'privacy' -->
+          <input onchange="formatExpression()" type="radio" id="radio-5" class="privacy-option" name="privacy" value="true" checked />
+          <label class='radio-5' for='radio-5'></label> <!-- public -->
+          <h4>Public</h4>
+          <small>Anyone can participate</small>
+        </div>
+        <div class='option-2'>
+          <!-- id should be 'privacy' -->
+          <input onchange="formatExpression()" type="radio" id="radio-6" class="privacy-option" name="privacy" value="false" />
+          <label class='radio-6' for='radio-6'></label> <!-- public -->
+          <h4>Private</h4>
+          <small>Only invited users can participate</small>
+        </div>
+      </li>
+
+      <li class='row'>
+        <div class='name'>
+          <h3>Your Stakes:</h3>
+          <small>now it's getting serious</small>
+        </div>
+        <select class='stakes-drop' name="stakes" id="stakes">
+          <option value="0">CREATE CUSTOM STAKES</option>
+          <option value="0">Change your facebook status to praise the winning pick</option>
+          <option value="0">Bragging rights for the next 2 weeks</option>
+          <option value="0">Losers tweet about their loss</option>
+          <option value="0">Change desktop wallpaper to a picture of the winning pick</option>
+        </select>
+      </li>
+
+       <li class='row'>
+         <a href="#" id="continue" class="btn-red continue-challenge">Continue</a>
+       </li>
+     </form>
+     </ul>
+  </div>
+</div>
+
+<script language="javascript">
+CHALLENGE_ID = '0';
+$(document).ready(function() {
+
+  // Jeff's hackity hacks
+
+  $('.team-challenge-custom li').live('mouseup', function(){
+    CHALLENGE_ID = $(this).data().val;
+  });
+
+  // end
+
+  $('h2#header').empty().append('Loading User...');
+  fbConnect();
+  formatExpression();
+  $('#continue').mousedown(function() { createChallenge(); });
+});
+
+function getStakes() {
+  // Jeff: Adjust how you fetch the stakes here
+  // Currently a simple text field.
+  var input = $.trim($('#stakes').val());
+  var stakes = (input.length) ? input : false;
+  return(stakes);
+}
+
+/* Ajax */
+function createChallenge() {
+  var stakes = getStakes();
+  if (!stakes) {
+    alert('Please set your stakes');
+    return;
+  }
+  var mypick = $('select#mypick').val();
+  if ((mypick == '0') || (CHALLENGE_ID == '0')) {
+    alert('Please make your selection!');
+    return;
+  }
+  var request = {
+    call:'api/challenges/team',
+    dataMethod:'POST',
+    data:{
+      challenge:{
+        template_id : $('select#challenge').val(),
+        stakes : stakes,
+        team_id: mypick,
+        my_pick: mypick,
+        public: $('.privacy-option:checked').val(),
+        featured : false,
+        logo_url : 'http://profile.ak.fbcdn.net/hprofile-ak-snc4/186629_631190201_5468358_q.jpg'
+      }
+    },
+    response:function(resp,args) {
+      if (!resp.success)
+        alert(resp.message);
+      else
+        document.location.href = '/challenges/'+resp.data.challenge.id;
+    }
+  }
+
+  if (USER.id != '0')
+    API(request);
+  else {
+    REQUESTS = []
+    REQUESTS.push(request); // Store for after FB Activation
+    initConnect();
+  }
+}
+
+function formatExpression() {
+  if ((CHALLENGE_ID == '0') || ($('select#mypick option:selected').val() == '0')){
+    $('div.mypickpreview').empty().append('Make your selections!');
+    return;
+  }
+  var exp = CHALLENGE_TEMPLATES[CHALLENGE_ID];
+  exp = exp.replace("{TEAM}",'<strong>'+$('select#mypick option:selected').text()+'</strong>');
+  $('div.mypickpreview').empty().append('"'+exp+'"');
+}
+
+var CHALLENGE_TEMPLATES = {
+<% @challenges.each do |challenge| %>
+  <%= challenge['template_id'] %> : '<%=raw challenge['template_expression'] %>',
+<% end %>
+}
+</script>

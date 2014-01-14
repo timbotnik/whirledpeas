@@ -1,0 +1,74 @@
+<div class='corners'>
+  <div class='hilight-box'>
+    <h1><%=@challenge.challenge_expression.html_safe %></h1>
+    <div class='content'>
+        <div class='center spc1'>
+          <!-- Show winner! @challenge.winner -->
+        </div>
+      
+      <a class='decision-maker' href='#'>
+      <span class='text'>Need help with your decision? Use</span>
+      <span class='img'><img alt="Decision-maker-text" src="/images/decision-maker-text.png" /></span>
+      </a>
+      <% if (@mypick['status'] == 'pending') %>
+        <a href="#" class="btn-red pick-player" id="submit_response">Submit</a>
+      <% end %>
+      <!-- <div class='status private'>
+              <strong>Private</strong>
+              (Only invited users can participate)
+            </div>
+            <div class="open-till">Open until <strong><span class="time">8:00pm</span> on <span class="date">Monday October 12</span></strong> -->
+      
+    </div>
+  </div>
+</div>
+
+<% if (@mypick['status'] == 'pending') %>
+  <div id='main' class='pending'>
+    <div class='sub-box your-pick'>
+     <!-- User was invited but did not participate.  They may be set to "lost". Not sure yet -->
+    </div>
+<% else %>
+  <div id='main'>
+    <div class='sub-box your-pick'>
+      <h1>Your Pick:</h1>
+      <div class='left'>
+        <img alt="Player-placeholder" class="player-photo" src="http://static.nfl.com/static/content/public/image/getty/headshot/<%=@mypick['thumb']%>" />
+        <h2><%=@mypick.player['first']+' '+@mypick.player['last']%></h2>
+        <p><%=@mypick.player['position']%></p>
+        <p><%=@mypick['team_info']['city']+' '+@mypick['team_info']['name']%></p>
+      </div>
+    </div>
+<% end %>
+  <div class='sub-box the-stakes'>
+    <h1>The Stakes:</h1>
+    <div class='left'>
+      <img alt="Trophy" class="trophy" src="/images/trophy.png" />
+      <h3>
+        <% if (@challenge.featured == true) %>
+          Featured Challenge
+        <% else %>
+          <%= @challenge.stakes %>
+        <% end %>
+      </h3>
+    </div>
+  </div>
+
+<script language="javascript">
+
+  function findPlayer(player_id) {
+    var resp = {};
+    $.each(PLAYERS,function(i,player){
+      if (player.player_id == player_id) {
+        resp = player;
+        return false;
+      }
+    })
+    return resp;
+  }
+
+  $('.invite_friends').mousedown(function() {
+    inviteFriends();
+  });
+  
+</script>

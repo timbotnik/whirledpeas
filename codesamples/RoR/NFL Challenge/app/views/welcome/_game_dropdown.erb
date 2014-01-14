@@ -1,0 +1,5 @@
+<select class='featured_challenge' id="select_<%=challenge.id%>" > 
+	  <option value='<%= challenge.game.home_team.team_id %>'><%= challenge.game.home_team.city + " " + challenge.game.home_team.name %></option> 
+		<option value='<%= challenge.game.away_team.team_id %>'><%= challenge.game.away_team.city + " " + challenge.game.away_team.name %></option>
+</select> 
+<a href="#" class="btn-red ct_<%= challenge.challenge_type %>" id="<%=challenge.id%>">Continue</a>

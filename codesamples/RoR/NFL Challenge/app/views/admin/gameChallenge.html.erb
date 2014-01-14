@@ -1,0 +1,268 @@
+<h2>Bloomberg Sports Administration</h2>
+
+<div id="content">
+  <div class="title">Challenges Administrator</div>
+  <%= link_to 'Admin', admin_index_path, :class => 'tab' %>
+  <%= link_to 'Teams', admin_teams_path, :class => 'tab' %>
+  <%= link_to 'Games', admin_games_path, :class => 'tab' %>
+  <%= link_to 'Players', admin_players_path, :class => 'tab' %>
+  <%= link_to 'Sponsors', admin_sponsors_path, :class => 'tab' %>
+  <%= link_to 'Challenges', admin_challenges_path, :class => 'tab active' %>
+    
+  <div class="box">
+  
+    <div class="challengeLinks">
+      <%= link_to 'Custom Challenge', admin_challenges_path, :class => 'challengeLink' %>
+      <%= link_to 'Player Challenge', admin_playerChallenge_path, :class => 'challengeLink' %>
+      <%= link_to 'Game Challenge', admin_gameChallenge_path, :class => 'challengeLink active' %>
+      <%= link_to 'Team Challenge', admin_teamChallenge_path, :class => 'challengeLink' %>
+    </div>
+    <div class="dotted_line"></div>
+    
+    Game challenges are created around a single football game between two teams.  Rather than creating challenges around specific players or teams, your 
+    challenges will revolve around a specific measurable aspect of the game (such as fumbles or completed passes).<br><br>
+    
+    <i>Example: "In the <strong><u>Eagles vs. Jets</u></strong> game, <strong><u>56</u></strong> <strong><u>passes will be completed</u></strong>."</i>
+    
+    <div class="dotted_line"></div>
+    
+    <form name="gameChallenge" id="gameChallenge" onSubmit="return false;">
+    
+      <div class="form_title">Select game:</div>
+      <div class="form_options">
+        <select name="game_id" id="game_id" onchange="permitSelections(this.value);">
+          <option value="0">Loading...</option>
+        </select>
+      </div>
+      <div class="clear"></div>
+      
+      <div class="form_title">Select challenge:</div>
+      <div class="form_options">
+        <select name="challenge" id="challenge" onchange="setChallenge(this.value)">
+          <option value="0">Select your challenge.</option>
+          <% @challenges.each do |challenge| %>
+            <option value="<%=challenge['template_id']%>"><%=challenge['display_text']%>
+          <% end %>
+        </select>
+      </div>
+      <div class="clear"></div>
+      
+      <div class="form_title">Challenge Text:</div>
+      <div class="form_options">
+        <textarea name="challenge_expression" id="challenge_expression" class="create" style="width: 400px; height: 25px;"></textarea>
+      </div>
+      <div class="clear"></div>
+      <br>
+      
+      <div class="form_title">Sponsor (Optional):</div>
+      <div class="form_options">
+        <select name="sponsor_id" id="sponsor_id">
+          <option value="0">Please select a sponsor (optional).</option>
+          <% @sponsors.each do |sponsor| %>
+            <option value="<%=sponsor['id']%>"><%=sponsor['name']%></option>
+          <% end %>
+        </select>
+        <br>
+        <small>If provided, this challenge will be grouped with challenges from this sponsor.</small><br><br>
+      </div>
+      <div class="clear"></div>
+      
+      <div id="continue" class="button" style="float: right; margin-top: 10px;">Continue ></div>
+      <div class="clear"></div>
+    </form>
+  </div>
+  
+</div>
+<%= link_to 'Home', welcome_index_path %>
+
+<script>
+var CHALLENGE_ID = '0';
+$(document).ready(function() { 
+  $('h2#header').empty().append('Loading User...');
+  fbConnect();
+  setGames();
+  permitSelections('0');
+  setChallenge(CHALLENGE_ID);
+  $('div#continue').mousedown(function() { createChallenge(); });
+});
+
+function getStakes() {
+  // Jeff: Adjust how you fetch the stakes here
+  // Currently a simple text field.
+  var input = $.trim($('#stakes').val());
+  var stakes = (input.length) ? input : false;
+  return(stakes);
+}
+
+/* Ajax */
+function createChallenge() {
+  var challenge = {
+    template_id : $('select#challenge').val(),
+    stakes : 'None',
+    game_id : $('select#game_id').val(),
+    public: true,
+    featured : true
+  }
+  if ($('#sponsor_id').val() != 0)
+    challenge.sponsor_id = $('#sponsor_id').val();  
+  var ed = tinyMCE.get('challenge_expression');
+  exp = $.trim(ed.getContent());  
+  if (exp.length)
+    challenge.challenge_expression = exp;
+  var request = {
+    call:'api/challenges/game',
+    dataMethod:'POST',
+    data:{
+      challenge:challenge
+    },
+    response:function(resp,args) {
+      if (!resp.success)
+        alert(resp.message);
+      else 
+        if (!confirm("Challenge created! Would you like to view the live challenge? (Cancel to return to administrator)")) {
+          document.location.reload();
+        }
+        else {
+          document.location.href = '/challenges/'+resp.data.challenge.id;
+        }
+    }
+  }
+  /* Verify Data, Facebook Connect */
+  var mypick = $('select#mypick').val();
+  if ((mypick == '0') || (CHALLENGE_ID == '0')) {
+    alert('Please make your selection!');
+    return;
+  }
+  if (USER.id != '0')
+    API(request);
+  else {
+    REQUESTS.push(request); // Store for after FB Activation
+    initConnect();
+  }
+}
+
+function permitSelections(id) {
+  if (id == '0') {
+    $('select#challenge').val('0');
+    $('select#mypick').val('0');
+    $('select#challenge').attr('disabled',true);
+    $('select#mypick').attr('disabled',true);
+  }
+  else {
+    $('select#challenge').attr('disabled',false);
+    $('select#mypick').attr('disabled',false);
+  }
+  setChallenge(CHALLENGE_ID);
+}
+
+function setChallenge(id) {
+  CHALLENGE_ID = id;
+  var ed = tinyMCE.get('challenge_expression');
+  var val = (CHALLENGE_ID == '0') ? '' : $('#challenge option:selected').text();
+  if (ed != undefined)
+    ed.setContent(val);
+  resetFields();
+}
+
+function resetFields() {
+  if (CHALLENGE_ID == '0')
+    $('select#mypick').empty().append('<option value="0">Please select a challenge.</option>');
+  else
+    $('select#mypick').empty();
+  switch(CHALLENGE_ID) {
+    case 'game_winner':
+    case 'game_yards':
+      var game = getGame($('select#game_id').val());
+      $('select#mypick').append('<option value="'+game.home_team.id+'">The '+game.home_team.name+'</option>');
+      $('select#mypick').append('<option value="'+game.away_team.id+'">The '+game.away_team.name+'</option>');
+    break;
+    
+    default:
+    $.each(getPicks(),function(i,pick){ 
+      $('select#mypick').append('<option value="'+pick+'">'+pick+'</option>');
+    })
+  }
+  formatExpression();
+}
+
+function setGames() {
+  $('select#game_id').empty().append('<option value="0">Please choose a game.</option>');
+  $.each(GAMES,function(i,obj) { 
+    var game = obj.game;
+    var date = new Date(game.starts_at);
+    $('select#game_id').append(
+    '<option value="'+game.game_id+'">'+
+      game.away_team.name+' @ '+game.home_team.name+
+    '</option>');
+  })
+}
+
+function getPicks() {
+  var picks;
+  switch(CHALLENGE_ID) {
+    <% @challenges.each do |challenge| %>
+    case '<%=challenge['template_id']%>':
+      picks = <%=raw challenge['picks']%>
+    break;
+    <% end %>
+      
+    default:
+      picks = []
+  }
+  return picks;
+}
+
+function formatTime(timestamp) {
+  /* Not in use, but possibly useful for UI updates? */
+  var d = new Date(timestamp);
+  var hours = d.getHours();
+  var minutes = d.getMinutes();
+  var ext = 'p';
+  if (hours < 11) {
+    ext = 'a';
+  }
+  if (hours == 0) {
+    hours = 12;
+  }
+  else if (hours > 12) {
+    hours = hours-12;
+  }
+  if (minutes < 10)
+    minutes = "0"+minutes;
+  return(hours+':'+minutes+ext)
+}
+
+function getGame(game_id) {
+  var resp = {};
+  $.each(GAMES,function(i,obj){
+    var game = obj.game;
+    if (game.game_id == game_id) {
+      resp = game;
+      return false;
+    }
+  })
+  return resp;
+}
+
+function formatExpression() {
+  if (CHALLENGE_ID == '0') {
+    $('div.mypickpreview').empty().append('Make your selections!');
+    return;
+  }
+  var exp = CHALLENGE_TEMPLATES[CHALLENGE_ID];
+  exp = exp.replace("{GAME}",'<strong>'+$('select#game_id option:selected').text()+'</strong>');
+  exp = exp.replace("{PICKS}",'<strong>'+$('select#mypick option:selected').text()+'</strong>');
+  $('div.mypickpreview').empty().append('"'+exp+'"');
+}
+
+var GAMES = [];
+<% @games.each do |game| %>
+  GAMES.push(<%=raw game.to_json %>);
+<% end %>
+
+var CHALLENGE_TEMPLATES = {
+<% @challenges.each do |challenge| %>
+  <%= challenge['template_id'] %> : '<%=raw challenge['template_expression'] %>',
+<% end %>
+}
+</script>

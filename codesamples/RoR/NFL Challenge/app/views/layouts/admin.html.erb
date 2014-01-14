@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xml:lang='en' xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+  <title>Bloomberg Sports > Fan Libs</title>
+  <%= stylesheet_link_tag :all %>
+  <%= csrf_meta_tag %>
+  <%= javascript_include_tag "jquery" %>
+  <%= javascript_include_tag "jquery-ui-1.8.1.custom.min" %>
+  <%= javascript_include_tag "init" %>
+  <%= javascript_include_tag "json2.min" %>
+  <%= javascript_include_tag "tiny_mce/tiny_mce" %>
+  <script language="javascript">
+    var USER = {
+      id: '<%=h @current_user.fb_number%>',
+      token: '<%=h @current_user.fb_token%>',
+      nickname: '<%=h @current_user.nickname%>',
+      role: '<%=h @current_user.role%>'
+    }
+  </script>
+  <script type="text/javascript">
+  tinyMCE.init({
+    mode : "textareas",
+    theme : "simple",
+  });
+</script>
+</head>
+<body>
+  <div id="container">
+    <%= yield %>
+  </div>
+  <div id="fb-root"></div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<div class='contain' id="pvp_container_<%=challenge.id%>">
+	<div class='left'> 
+	  <img alt="Player-placeholder" class="player-photo" src="<%= get_photo(challenge.player1_id) %>" /> 
+	    <input type="radio" name="pick" id="pvp_<%= challenge.id %>" value="<%=challenge.player1_id%>"> 
+	    <label class='radio-1' for='pvp_<%= challenge.id %>'></label> 
+	  <h2><%= challenge.player1.first %></h2>
+		<h2><%= challenge.player1.last %></h2> 
+	  <strong><%= challenge.player1.position %></strong> 
+	  <p><%= challenge.player1.team.name %></p> 
+	</div> 
+	<div class='or'>VS</div> 
+	<div class='right'> 
+	  <img alt="Player-placeholder" class="player-photo" src="<%= get_photo(challenge.player2_id) %>" /> 
+	    <input type="radio" name="pick" id="pvp2_<%= challenge.id %>" value="<%=challenge.player2_id%>"> 
+	    <label class='radio-2' for='pvp2_<%= challenge.id %>'></label> 
+	  	<h2><%= challenge.player2.first %></h2>
+			<h2><%= challenge.player2.last %></h2> 
+		  <strong><%= challenge.player2.position %></strong> 
+		  <p><%= challenge.player2.team.name %></p>
+	</div> 
+</div>
+<a class='decision-maker-featured'></a>
+<a href="#" class="btn-red ct_<%= challenge.challenge_type %>" id="<%=challenge.id%>">Continue</a>

@@ -1,0 +1,27 @@
+<div class='login'>
+  <div class='corners'>
+  <div class='hilight-box'>
+    <h1>
+      <%=@challenge.challenge_expression.html_safe %>
+    </h1>
+    <div class='status private'>
+      <strong>Private Bet</strong>
+      (Only people with invites can participate)
+    </div>
+  </div>
+  </div>
+  <div id='main'>
+  <div class='msg'>
+    <%= image_tag("icon-lock.png", :alt => 'icon-lock') %>
+    <h2>
+      Sorry, this challenge is Private. Only invited users can participate.
+    </h2>
+    <a class='btn-grey' href='<% welcome_index_path %>' id='create-challenge'>
+      Create your own challenge &nbsp;
+      <span>
+        &#9654;
+      </span>
+    </a>
+  </div>
+  </div>
+</div>

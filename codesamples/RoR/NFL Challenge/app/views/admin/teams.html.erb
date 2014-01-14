@@ -1,0 +1,30 @@
+<h2>Bloomberg Sports Administration</h1>
+
+<div id="content">
+  <div class="title">Teams</div>
+  <%= link_to 'Admin', admin_index_path, :class => 'tab' %>
+  <%= link_to 'Teams', admin_teams_path, :class => 'tab active' %>
+  <%= link_to 'Games', admin_games_path, :class => 'tab' %>
+  <%= link_to 'Players', admin_players_path, :class => 'tab' %>
+  <%= link_to 'Sponsors', admin_sponsors_path, :class => 'tab' %>
+  <%= link_to 'Challenges', admin_challenges_path, :class => 'tab' %>
+  <div class="box">
+    <%= link_to 'Re-Import Team Roster', admin_import_teams_path, :class => 'challengeLink' %>
+    <div class="clear: left;"></div>
+    <br>
+    <ul class="admin">
+    <% @teams.each do |team| %>
+      <li>
+       <%= team['abbr'] %> :  
+       <%= team['city'] %> 
+       <%= team['name'] %> : 
+       <%= team['stadium'] %> | 
+       Team ID #<%= team['team_id'] %>
+      </li>
+    <% end %>   
+    </ul>
+  </div>
+</div>
+
+<br>
+<%= link_to 'Admin Home', admin_index_path %>

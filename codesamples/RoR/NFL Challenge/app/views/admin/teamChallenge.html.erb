@@ -1,0 +1,142 @@
+<h2>Bloomberg Sports Administration</h2>
+
+<div id="content">
+  <div class="title">Challenges Administrator</div>
+  <%= link_to 'Admin', admin_index_path, :class => 'tab' %>
+  <%= link_to 'Teams', admin_teams_path, :class => 'tab' %>
+  <%= link_to 'Games', admin_games_path, :class => 'tab' %>
+  <%= link_to 'Players', admin_players_path, :class => 'tab' %>
+  <%= link_to 'Sponsors', admin_sponsors_path, :class => 'tab' %>
+  <%= link_to 'Challenges', admin_challenges_path, :class => 'tab active' %>
+    
+  <div class="box">
+  
+    <div class="challengeLinks">
+      <%= link_to 'Custom Challenge', admin_challenges_path, :class => 'challengeLink' %>
+      <%= link_to 'Player Challenge', admin_playerChallenge_path, :class => 'challengeLink' %>
+      <%= link_to 'Game Challenge', admin_gameChallenge_path, :class => 'challengeLink' %>
+      <%= link_to 'Team Challenge', admin_teamChallenge_path, :class => 'challengeLink active' %>
+    </div>
+    <div class="dotted_line"></div>
+    
+    Team challenges are created around an entire team.  The challenges you create in this category will revolve around all 
+    individuals on the team and their joint effort, rather than calling out one person's specific performance.<br><br>
+    
+    <i>Example: "<strong><u>The Packers</u></strong> will have the most <strong><u>touchdowns</u></strong> this week."</i>
+    
+    <div class="dotted_line"></div>
+    
+    <form name="teamChallenge" id="teamChallenge" onSubmit="return false;">
+    
+      <div class="form_title">Select challenge:</div>
+      <div class="form_options">
+        <select name="challenge" id="challenge" onchange="setChallenge(this.value);">
+          <option value="0">Select your challenge.</option>
+          <% @challenges.each do |challenge| %>
+            <option value="<%=challenge['template_id']%>"><%=challenge['display_text']%>
+          <% end %>
+        </select>
+      </div>
+      <div class="clear"></div>
+      
+      <div class="form_title">Challenge Text:</div>
+      <div class="form_options">
+        <textarea name="challenge_expression" id="challenge_expression" class="create" style="width: 400px; height: 25px;"></textarea>
+      </div>
+      <div class="clear"></div>
+      <br>
+                  
+      <div class="form_title">Sponsor (Optional):</div>
+      <div class="form_options">
+        <select name="sponsor_id" id="sponsor_id">
+          <option value="0">Please select a sponsor (optional).</option>
+          <% @sponsors.each do |sponsor| %>
+            <option value="<%=sponsor['id']%>"><%=sponsor['name']%></option>
+          <% end %>
+        </select>
+        <br>
+        <small>If provided, this challenge will be grouped with challenges from this sponsor.</small><br><br>
+      </div>
+      <div class="clear"></div>
+          
+      <div id="continue" class="button" style="float: right; margin-top: 10px;">Continue ></div>
+      <div class="clear"></div>
+    </form>
+  </div>
+</div>
+
+<%= link_to 'Home', welcome_index_path %>
+
+<script language="javascript">
+CHALLENGE_ID = '0';
+$(document).ready(function() { 
+  fbConnect();
+  formatExpression();
+  $('div#continue').mousedown(function() { createChallenge(); });
+});
+
+/* Ajax */
+function createChallenge() {
+  var challenge = {
+    template_id : $('select#challenge').val(),
+    stakes : 'None',
+    team_id: '<%=@teams[0].team_id%>',
+    public: true,
+    featured : true
+  }
+  if ($('#sponsor_id').val() != 0)
+    challenge.sponsor_id = $('#sponsor_id').val();
+  var ed = tinyMCE.get('challenge_expression');
+  exp = $.trim(ed.getContent());  
+  if (exp.length)
+    challenge.challenge_expression = exp;
+  var request = {
+    call:'api/challenges/team',
+    dataMethod:'POST',
+    data:{
+      challenge: challenge  
+    },
+    response:function(resp,args) {
+      if (!resp.success)
+        alert(resp.message);
+      else
+        if (!confirm("Challenge created! Would you like to view the live challenge? (Cancel to return to administrator)")) {
+          document.location.reload();
+        }
+        else {
+          document.location.href = '/challenges/'+resp.data.challenge.id;
+        }
+    }
+  }
+
+  if (USER.id != '0')
+    API(request);
+  else {
+    REQUESTS.push(request); // Store for after FB Activation
+    initConnect();
+  }
+}
+
+function setChallenge(id) {
+  CHALLENGE_ID=id; 
+  var ed = tinyMCE.get('challenge_expression');
+  ed.setContent($('#challenge option:selected').text());
+  formatExpression();
+}
+
+function formatExpression() {
+  if ((CHALLENGE_ID == '0') || ($('select#mypick option:selected').val() == '0')){
+    $('div.mypickpreview').empty().append('Make your selections!');
+    return;
+  }
+  var exp = CHALLENGE_TEMPLATES[CHALLENGE_ID];
+  exp = exp.replace("{TEAM}",'<strong>'+$('select#mypick option:selected').text()+'</strong>');
+  $('div.mypickpreview').empty().append('"'+exp+'"');
+}
+
+var CHALLENGE_TEMPLATES = {
+<% @challenges.each do |challenge| %>
+  <%= challenge['template_id'] %> : '<%=raw challenge['template_expression'] %>',
+<% end %>
+}
+</script>
