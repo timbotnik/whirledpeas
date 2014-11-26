@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "FormValidation.h"
 
 @interface FormValidationTestTests : XCTestCase
 
@@ -25,16 +26,34 @@
     [super tearDown];
 }
 
-- (void)testExample {
+- (void)testMinText {
     // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+    ValidationRule *rule = [ValidationRule ruleWithMinTextLength:3 andErrorMessage:@"Too Short"];
+    ValidationResult *shouldFail = [rule validate:@"ab"];
+    ValidationResult *shouldPass = [rule validate:@"abc"];
+    
+    XCTAssert(shouldFail != nil);
+    XCTAssert(shouldPass == nil);
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+- (void)testMaxText {
+    // This is an example of a functional test case.
+    ValidationRule *rule = [ValidationRule ruleWithMaxTextLength:3 andErrorMessage:@"Too Long"];
+    ValidationResult *shouldFail = [rule validate:@"abcd"];
+    ValidationResult *shouldPass = [rule validate:@"abc"];
+    
+    XCTAssert(shouldFail != nil);
+    XCTAssert(shouldPass == nil);
+}
+
+- (void)testEmail {
+    // This is an example of a functional test case.
+    ValidationRule *rule = [ValidationRule ruleWithRegex:kFormValidationRegexEmail andErrorMessage:@"Bad Email"];
+    ValidationResult *shouldFail = [rule validate:@"a@b"];
+    ValidationResult *shouldPass = [rule validate:@"a@b.com"];
+    
+    XCTAssert(shouldFail != nil);
+    XCTAssert(shouldPass == nil);
 }
 
 @end
