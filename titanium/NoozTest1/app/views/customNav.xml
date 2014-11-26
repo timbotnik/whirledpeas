@@ -1,7 +1,0 @@
-<Alloy>
-	<View class="container" id="discoveryNavBar">
-		<Button id="navLeftButton" />
-		<ImageView id="discoveryNavLogo"/>
-		<Button id="navRightButton" />
-	</View>
-</Alloy>

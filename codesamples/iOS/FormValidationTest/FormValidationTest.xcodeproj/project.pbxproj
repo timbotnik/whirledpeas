@@ -1,0 +1,461 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CCE50A261A2520DF00E21A6E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE50A251A2520DF00E21A6E /* main.m */; };
+		CCE50A291A2520DF00E21A6E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE50A281A2520DF00E21A6E /* AppDelegate.m */; };
+		CCE50A2C1A2520DF00E21A6E /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE50A2B1A2520DF00E21A6E /* SignUpViewController.m */; };
+		CCE50A2F1A2520DF00E21A6E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCE50A2D1A2520DF00E21A6E /* Main.storyboard */; };
+		CCE50A311A2520DF00E21A6E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCE50A301A2520DF00E21A6E /* Images.xcassets */; };
+		CCE50A341A2520DF00E21A6E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCE50A321A2520DF00E21A6E /* LaunchScreen.xib */; };
+		CCE50A401A2520DF00E21A6E /* FormValidationTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE50A3F1A2520DF00E21A6E /* FormValidationTestTests.m */; };
+		CCE50A551A25214A00E21A6E /* FormField.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE50A521A25214A00E21A6E /* FormField.m */; };
+		CCE50A561A25214A00E21A6E /* FormValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE50A541A25214A00E21A6E /* FormValidation.m */; };
+		CCE50A5A1A252C5800E21A6E /* FormFieldController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE50A591A252C5800E21A6E /* FormFieldController.m */; };
+		CCE50A611A2551AF00E21A6E /* ValidationRule.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE50A601A2551AF00E21A6E /* ValidationRule.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CCE50A3A1A2520DF00E21A6E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CCE50A181A2520DF00E21A6E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CCE50A1F1A2520DF00E21A6E;
+			remoteInfo = FormValidationTest;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CCE50A201A2520DF00E21A6E /* FormValidationTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FormValidationTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCE50A241A2520DF00E21A6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CCE50A251A2520DF00E21A6E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CCE50A271A2520DF00E21A6E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		CCE50A281A2520DF00E21A6E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		CCE50A2A1A2520DF00E21A6E /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
+		CCE50A2B1A2520DF00E21A6E /* SignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
+		CCE50A2E1A2520DF00E21A6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CCE50A301A2520DF00E21A6E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		CCE50A331A2520DF00E21A6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		CCE50A391A2520DF00E21A6E /* FormValidationTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FormValidationTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCE50A3E1A2520DF00E21A6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CCE50A3F1A2520DF00E21A6E /* FormValidationTestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormValidationTestTests.m; sourceTree = "<group>"; };
+		CCE50A511A25214A00E21A6E /* FormField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormField.h; sourceTree = "<group>"; };
+		CCE50A521A25214A00E21A6E /* FormField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormField.m; sourceTree = "<group>"; };
+		CCE50A531A25214A00E21A6E /* FormValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormValidation.h; sourceTree = "<group>"; };
+		CCE50A541A25214A00E21A6E /* FormValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormValidation.m; sourceTree = "<group>"; };
+		CCE50A571A25226A00E21A6E /* MinMaxRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MinMaxRange.h; sourceTree = "<group>"; };
+		CCE50A581A252C5800E21A6E /* FormFieldController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormFieldController.h; sourceTree = "<group>"; };
+		CCE50A591A252C5800E21A6E /* FormFieldController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormFieldController.m; sourceTree = "<group>"; };
+		CCE50A5F1A2551AF00E21A6E /* ValidationRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidationRule.h; sourceTree = "<group>"; };
+		CCE50A601A2551AF00E21A6E /* ValidationRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValidationRule.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CCE50A1D1A2520DF00E21A6E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCE50A361A2520DF00E21A6E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CCE50A171A2520DF00E21A6E = {
+			isa = PBXGroup;
+			children = (
+				CCE50A221A2520DF00E21A6E /* FormValidationTest */,
+				CCE50A3C1A2520DF00E21A6E /* FormValidationTestTests */,
+				CCE50A211A2520DF00E21A6E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CCE50A211A2520DF00E21A6E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CCE50A201A2520DF00E21A6E /* FormValidationTest.app */,
+				CCE50A391A2520DF00E21A6E /* FormValidationTestTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CCE50A221A2520DF00E21A6E /* FormValidationTest */ = {
+			isa = PBXGroup;
+			children = (
+				CCE50A271A2520DF00E21A6E /* AppDelegate.h */,
+				CCE50A281A2520DF00E21A6E /* AppDelegate.m */,
+				CCE50A2A1A2520DF00E21A6E /* SignUpViewController.h */,
+				CCE50A2B1A2520DF00E21A6E /* SignUpViewController.m */,
+				CCE50A2D1A2520DF00E21A6E /* Main.storyboard */,
+				CCE50A301A2520DF00E21A6E /* Images.xcassets */,
+				CCE50A321A2520DF00E21A6E /* LaunchScreen.xib */,
+				CCE50A501A25214A00E21A6E /* Forms */,
+				CCE50A231A2520DF00E21A6E /* Supporting Files */,
+			);
+			path = FormValidationTest;
+			sourceTree = "<group>";
+		};
+		CCE50A231A2520DF00E21A6E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CCE50A241A2520DF00E21A6E /* Info.plist */,
+				CCE50A251A2520DF00E21A6E /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CCE50A3C1A2520DF00E21A6E /* FormValidationTestTests */ = {
+			isa = PBXGroup;
+			children = (
+				CCE50A3F1A2520DF00E21A6E /* FormValidationTestTests.m */,
+				CCE50A3D1A2520DF00E21A6E /* Supporting Files */,
+			);
+			path = FormValidationTestTests;
+			sourceTree = "<group>";
+		};
+		CCE50A3D1A2520DF00E21A6E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CCE50A3E1A2520DF00E21A6E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CCE50A501A25214A00E21A6E /* Forms */ = {
+			isa = PBXGroup;
+			children = (
+				CCE50A571A25226A00E21A6E /* MinMaxRange.h */,
+				CCE50A581A252C5800E21A6E /* FormFieldController.h */,
+				CCE50A591A252C5800E21A6E /* FormFieldController.m */,
+				CCE50A511A25214A00E21A6E /* FormField.h */,
+				CCE50A521A25214A00E21A6E /* FormField.m */,
+				CCE50A531A25214A00E21A6E /* FormValidation.h */,
+				CCE50A541A25214A00E21A6E /* FormValidation.m */,
+				CCE50A5F1A2551AF00E21A6E /* ValidationRule.h */,
+				CCE50A601A2551AF00E21A6E /* ValidationRule.m */,
+			);
+			path = Forms;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CCE50A1F1A2520DF00E21A6E /* FormValidationTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CCE50A431A2520DF00E21A6E /* Build configuration list for PBXNativeTarget "FormValidationTest" */;
+			buildPhases = (
+				CCE50A1C1A2520DF00E21A6E /* Sources */,
+				CCE50A1D1A2520DF00E21A6E /* Frameworks */,
+				CCE50A1E1A2520DF00E21A6E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FormValidationTest;
+			productName = FormValidationTest;
+			productReference = CCE50A201A2520DF00E21A6E /* FormValidationTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CCE50A381A2520DF00E21A6E /* FormValidationTestTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CCE50A461A2520DF00E21A6E /* Build configuration list for PBXNativeTarget "FormValidationTestTests" */;
+			buildPhases = (
+				CCE50A351A2520DF00E21A6E /* Sources */,
+				CCE50A361A2520DF00E21A6E /* Frameworks */,
+				CCE50A371A2520DF00E21A6E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CCE50A3B1A2520DF00E21A6E /* PBXTargetDependency */,
+			);
+			name = FormValidationTestTests;
+			productName = FormValidationTestTests;
+			productReference = CCE50A391A2520DF00E21A6E /* FormValidationTestTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CCE50A181A2520DF00E21A6E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Fullstack Digital";
+				TargetAttributes = {
+					CCE50A1F1A2520DF00E21A6E = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					CCE50A381A2520DF00E21A6E = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = CCE50A1F1A2520DF00E21A6E;
+					};
+				};
+			};
+			buildConfigurationList = CCE50A1B1A2520DF00E21A6E /* Build configuration list for PBXProject "FormValidationTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CCE50A171A2520DF00E21A6E;
+			productRefGroup = CCE50A211A2520DF00E21A6E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CCE50A1F1A2520DF00E21A6E /* FormValidationTest */,
+				CCE50A381A2520DF00E21A6E /* FormValidationTestTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CCE50A1E1A2520DF00E21A6E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCE50A2F1A2520DF00E21A6E /* Main.storyboard in Resources */,
+				CCE50A341A2520DF00E21A6E /* LaunchScreen.xib in Resources */,
+				CCE50A311A2520DF00E21A6E /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCE50A371A2520DF00E21A6E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CCE50A1C1A2520DF00E21A6E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCE50A561A25214A00E21A6E /* FormValidation.m in Sources */,
+				CCE50A2C1A2520DF00E21A6E /* SignUpViewController.m in Sources */,
+				CCE50A291A2520DF00E21A6E /* AppDelegate.m in Sources */,
+				CCE50A551A25214A00E21A6E /* FormField.m in Sources */,
+				CCE50A5A1A252C5800E21A6E /* FormFieldController.m in Sources */,
+				CCE50A611A2551AF00E21A6E /* ValidationRule.m in Sources */,
+				CCE50A261A2520DF00E21A6E /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCE50A351A2520DF00E21A6E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCE50A401A2520DF00E21A6E /* FormValidationTestTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CCE50A3B1A2520DF00E21A6E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CCE50A1F1A2520DF00E21A6E /* FormValidationTest */;
+			targetProxy = CCE50A3A1A2520DF00E21A6E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CCE50A2D1A2520DF00E21A6E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CCE50A2E1A2520DF00E21A6E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		CCE50A321A2520DF00E21A6E /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CCE50A331A2520DF00E21A6E /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CCE50A411A2520DF00E21A6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		CCE50A421A2520DF00E21A6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CCE50A441A2520DF00E21A6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = FormValidationTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CCE50A451A2520DF00E21A6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = FormValidationTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		CCE50A471A2520DF00E21A6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = FormValidationTestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FormValidationTest.app/FormValidationTest";
+			};
+			name = Debug;
+		};
+		CCE50A481A2520DF00E21A6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = FormValidationTestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FormValidationTest.app/FormValidationTest";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CCE50A1B1A2520DF00E21A6E /* Build configuration list for PBXProject "FormValidationTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CCE50A411A2520DF00E21A6E /* Debug */,
+				CCE50A421A2520DF00E21A6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CCE50A431A2520DF00E21A6E /* Build configuration list for PBXNativeTarget "FormValidationTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CCE50A441A2520DF00E21A6E /* Debug */,
+				CCE50A451A2520DF00E21A6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		CCE50A461A2520DF00E21A6E /* Build configuration list for PBXNativeTarget "FormValidationTestTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CCE50A471A2520DF00E21A6E /* Debug */,
+				CCE50A481A2520DF00E21A6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CCE50A181A2520DF00E21A6E /* Project object */;
+}

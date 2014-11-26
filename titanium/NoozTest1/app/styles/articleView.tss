@@ -1,7 +1,0 @@
-".container": {
-	backgroundColor: "white"
-},
-"#articleWebView": {
-	top: 40,
-	height: 'auto'
-}

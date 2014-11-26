@@ -1,6 +1,0 @@
-<select class='featured_challenge' id="select_<%=challenge.id%>"> 
-	<% @teams.each do |team| %>
-	  <option value='<%= team.team_id %>'><%= team.city + " " + team.name %></option> 
-	<% end %>
-</select> 
-<a href="#" class="btn-red ct_<%= challenge.challenge_type %>" id="<%=challenge.id%>">Continue</a>

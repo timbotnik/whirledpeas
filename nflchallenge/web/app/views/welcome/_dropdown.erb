@@ -1,6 +1,0 @@
-<select class='featured_challenge' id="select_<%=challenge.id%>" > 
-	<% eval(challenge.picks).each do |pick| %>
-	  <option value='<%= pick %>'><%= pick %></option> 
-	<% end %>
-</select> 
-<a href="#" class="btn-red ct_<%= challenge.challenge_type %>" id="<%=challenge.id%>">Continue</a>
